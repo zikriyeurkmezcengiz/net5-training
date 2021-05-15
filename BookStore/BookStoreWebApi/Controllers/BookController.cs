@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using BookStoreWebApi.Common;
 using BookStoreWebApi.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,7 +14,7 @@ namespace BookStoreWebApi.Controllers
     {
         private static List<Book> BookList = new List<Book>(){
                 new Book(){
-                    Id = 1,
+                    Id = (int)GenreEnum.PersonalGrowth,
                     Title = "Lean Startup",
                     GenreId = 1, // Personal Growth
                     PageCount=200,
@@ -22,14 +23,14 @@ namespace BookStoreWebApi.Controllers
                 new Book(){
                     Id = 2,
                     Title = "Herland",
-                    GenreId = 2, // Science Fiction
+                    GenreId = (int)GenreEnum.ScienceFiction, // Science Fiction
                     PageCount=250,
                     PublishDate = new DateTime(2002,06,12)
                 },
                 new Book(){
                     Id = 3,
                     Title = "Dune",
-                    GenreId = 2, // Science Fiction
+                    GenreId =(int)GenreEnum.ScienceFiction, // Science Fiction
                     PageCount=540,
                     PublishDate =new DateTime(2002,05,23)
                 },
