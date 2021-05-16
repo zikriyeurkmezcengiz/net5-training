@@ -11,7 +11,7 @@ namespace BookStoreWebApi.Controllers
     [Route("api/[controller]s")]
     public class BookController : ControllerBase
     {
-        public readonly BookStoreDbContext _context;
+        private readonly BookStoreDbContext _context;
         public BookController(BookStoreDbContext context)
         {
             _context = context;
