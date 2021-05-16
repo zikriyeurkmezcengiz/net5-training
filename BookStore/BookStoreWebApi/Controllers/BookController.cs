@@ -65,7 +65,7 @@ namespace BookStoreWebApi.Controllers
         [HttpPost]
         public IActionResult AddBook([FromBody] Book newBook)
         {
-            var book = _context.Books.SingleOrDefault(x => x.Id == newBook.Id);
+            var book = _context.Books.SingleOrDefault(x => x.Title == newBook.Title);
 
             if (book is not null)
                 return BadRequest();
