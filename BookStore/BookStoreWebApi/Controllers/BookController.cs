@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using BookStoreWebApi.Common;
 using BookStoreWebApi.DBOperations;
 using BookStoreWebApi.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace BookStoreWebApi.Controllers
 {
