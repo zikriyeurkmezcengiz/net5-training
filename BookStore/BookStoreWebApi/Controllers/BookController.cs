@@ -29,7 +29,8 @@ namespace BookStoreWebApi.Controllers
         [HttpGet("{id}")]
         public Book GetBookById(int id)
         {
-            var book = _context.Books.Where(book => book.Id == id).SingleOrDefault();
+            //var book = _context.Books.Where(book => book.Id == id).SingleOrDefault();
+            var book = _context.Books.Find(id);
             return book;
         }
 
