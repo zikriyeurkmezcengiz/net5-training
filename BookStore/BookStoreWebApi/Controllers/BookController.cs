@@ -1,6 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using BookStoreWebApi.BookOperations.CreateBook;
+using BookStoreWebApi.BookOperations.GetBooks;
 using BookStoreWebApi.DBOperations;
 using BookStoreWebApi.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -19,10 +20,11 @@ namespace BookStoreWebApi.Controllers
 
         //Get All Books
         [HttpGet]
-        public List<Book> GetBooks()
+        public IActionResult GetBooks()
         {
-            var bookList = _context.Books.OrderBy(x => x.Id).ToList<Book>();
-            return bookList;
+            GetBooksCommand command = new GetBooksCommand(_context);
+            var obj = command.Handle();
+            return Ok(obj);
         }
 
         //Get Book With FromRoute
@@ -31,6 +33,7 @@ namespace BookStoreWebApi.Controllers
         {
             //var book = _context.Books.Where(book => book.Id == id).SingleOrDefault();
             var book = _context.Books.Find(id);
+
             return book;
         }
 
@@ -62,15 +65,17 @@ namespace BookStoreWebApi.Controllers
 
         //Add Book
         [HttpPost]
-        public IActionResult AddBook([FromBody] Book newBook)
+        public IActionResult AddBook([FromBody] CreateBookModel newBook)
         {
-            var book = _context.Books.SingleOrDefault(x => x.Title == newBook.Title);
-
-            if (book is not null)
-                return BadRequest();
-
-            _context.Books.Add(newBook);
-            _context.SaveChanges();
+            try
+            {
+                CreateBookCommand command = new CreateBookCommand(_context);
+                command.Handle(newBook);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
             return Ok();
         }
 
