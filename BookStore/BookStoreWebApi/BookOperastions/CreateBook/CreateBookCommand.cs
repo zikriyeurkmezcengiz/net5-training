@@ -7,24 +7,25 @@ namespace BookStoreWebApi.BookOperations.CreateBook
 {
     public class CreateBookCommand
     {
+        public CreateBookModel Model { get; set; }
         private readonly BookStoreDbContext _context;
         public CreateBookCommand(BookStoreDbContext context)
         {
             _context = context;
         }
 
-        public void Handle(CreateBookModel model)
+        public void Handle()
         {
-            var book = _context.Books.SingleOrDefault(x => x.Title == model.Title);
+            var book = _context.Books.SingleOrDefault(x => x.Title == Model.Title);
 
             if (book is not null)
                 throw new InvalidOperationException("Kitap zaten mevcut.");
 
             book = new Book();
-            book.Title = model.Title;
-            book.PublishDate = model.PublishDate;
-            book.PageCount = model.PageCount;
-             book.GenreId = model.GenreId;
+            book.Title = Model.Title;
+            book.PublishDate = Model.PublishDate;
+            book.PageCount = Model.PageCount;
+            book.GenreId = Model.GenreId;
 
             _context.Books.Add(book);
             _context.SaveChanges();

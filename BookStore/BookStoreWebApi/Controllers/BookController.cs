@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using BookStoreWebApi.BookOperations.CreateBook;
 using BookStoreWebApi.BookOperations.GetBooks;
+using BookStoreWebApi.BookOperations.UpdateBook;
 using BookStoreWebApi.DBOperations;
 using BookStoreWebApi.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -47,20 +48,21 @@ namespace BookStoreWebApi.Controllers
 
         //Update Book
         [HttpPut("{id}")]
-        public IActionResult UpdateBook(int id, [FromBody] Book updatedBook)
+        public IActionResult UpdateBook(int id, [FromBody] UpdateBookModel updateBook)
         {
-            var book = _context.Books.SingleOrDefault(x => x.Id == id);
-
-            if (book is null)
-                return NotFound();
-
-
-            book.GenreId = updatedBook.GenreId != default ? updatedBook.GenreId : book.GenreId;
-            book.PageCount = updatedBook.PageCount != default ? updatedBook.PageCount : book.PageCount;
-            book.PublishDate = updatedBook.PublishDate != default ? updatedBook.PublishDate : book.PublishDate;
-            book.Title = updatedBook.Title != default ? updatedBook.Title : book.Title;
-            _context.SaveChanges();
+            try
+            {
+                UpdateBookCommand command = new UpdateBookCommand(_context);
+                command.BookId = id;
+                command.Model = updateBook;
+                command.Handle();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
             return Ok();
+
         }
 
         //Add Book
@@ -70,7 +72,8 @@ namespace BookStoreWebApi.Controllers
             try
             {
                 CreateBookCommand command = new CreateBookCommand(_context);
-                command.Handle(newBook);
+                command.Model = newBook;
+                command.Handle();
             }
             catch (Exception ex)
             {
