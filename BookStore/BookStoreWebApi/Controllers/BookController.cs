@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
 using BookStoreWebApi.BookOperations.CreateBook;
+using BookStoreWebApi.BookOperations.DeleteBook;
+using BookStoreWebApi.BookOperations.GetBookDetail;
 using BookStoreWebApi.BookOperations.GetBooks;
 using BookStoreWebApi.BookOperations.UpdateBook;
 using BookStoreWebApi.DBOperations;
@@ -23,19 +25,28 @@ namespace BookStoreWebApi.Controllers
         [HttpGet]
         public IActionResult GetBooks()
         {
-            GetBooksCommand command = new GetBooksCommand(_context);
+            GetBooksQuery command = new GetBooksQuery(_context);
             var obj = command.Handle();
             return Ok(obj);
         }
 
         //Get Book With FromRoute
         [HttpGet("{id}")]
-        public Book GetBookById(int id)
+        public IActionResult GetBookById(int id)
         {
-            //var book = _context.Books.Where(book => book.Id == id).SingleOrDefault();
-            var book = _context.Books.Find(id);
+            BookDetailViewModel obj;
+            try
+            {
+                GetBookDetailQuery command = new GetBookDetailQuery(_context);
+                command.BookId = id;
+                obj = command.Handle();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
-            return book;
+            return Ok(obj);
         }
 
         //Get Book With FromQuery
@@ -83,17 +94,19 @@ namespace BookStoreWebApi.Controllers
         }
 
 
-
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var book = _context.Books.SingleOrDefault(x => x.Id == id);
-
-            if (book is null)
-                return BadRequest();
-
-            _context.Books.Remove(book);
-            _context.SaveChanges();
+            try
+            {
+                DeleteBookCommand command = new DeleteBookCommand(_context);
+                command.BookId = id;
+                command.Handle();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
             return Ok();
         }
     }
