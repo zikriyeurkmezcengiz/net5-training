@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using AutoMapper;
 using BookStoreWebApi.BookOperations.CreateBook;
 using BookStoreWebApi.BookOperations.DeleteBook;
 using BookStoreWebApi.BookOperations.GetBookDetail;
@@ -16,9 +17,11 @@ namespace BookStoreWebApi.Controllers
     public class BookController : ControllerBase
     {
         private readonly BookStoreDbContext _context;
-        public BookController(BookStoreDbContext context)
+        private readonly IMapper _mapper;
+        public BookController(BookStoreDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         //Get All Books
@@ -82,7 +85,7 @@ namespace BookStoreWebApi.Controllers
         {
             try
             {
-                CreateBookCommand command = new CreateBookCommand(_context);
+                CreateBookCommand command = new CreateBookCommand(_context, _mapper);
                 command.Model = newBook;
                 command.Handle();
             }
