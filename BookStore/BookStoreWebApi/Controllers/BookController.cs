@@ -40,7 +40,7 @@ namespace BookStoreWebApi.Controllers
             BookDetailViewModel obj;
             try
             {
-                GetBookDetailQuery command = new GetBookDetailQuery(_context);
+                GetBookDetailQuery command = new GetBookDetailQuery(_context, _mapper);
                 command.BookId = id;
                 obj = command.Handle();
             }
