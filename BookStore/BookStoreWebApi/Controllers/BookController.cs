@@ -8,6 +8,7 @@ using BookStoreWebApi.BookOperations.GetBooks;
 using BookStoreWebApi.BookOperations.UpdateBook;
 using BookStoreWebApi.DBOperations;
 using BookStoreWebApi.Entities;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookStoreWebApi.Controllers
@@ -40,9 +41,13 @@ namespace BookStoreWebApi.Controllers
             BookDetailViewModel obj;
             try
             {
-                GetBookDetailQuery command = new GetBookDetailQuery(_context, _mapper);
-                command.BookId = id;
-                obj = command.Handle();
+                GetBookDetailQuery query = new GetBookDetailQuery(_context, _mapper);
+                query.BookId = id;
+
+                GetBookDetailQueryValidator validator = new GetBookDetailQueryValidator();
+                validator.ValidateAndThrow(query);
+
+                obj = query.Handle();
             }
             catch (Exception ex)
             {
@@ -69,6 +74,10 @@ namespace BookStoreWebApi.Controllers
                 UpdateBookCommand command = new UpdateBookCommand(_context);
                 command.BookId = id;
                 command.Model = updateBook;
+
+                UpdateBookCommandValidator validator = new UpdateBookCommandValidator();
+                validator.ValidateAndThrow(command);
+
                 command.Handle();
             }
             catch (Exception ex)
@@ -85,8 +94,19 @@ namespace BookStoreWebApi.Controllers
         {
             try
             {
+
                 CreateBookCommand command = new CreateBookCommand(_context, _mapper);
                 command.Model = newBook;
+
+                CreateBookCommandValidator validator = new CreateBookCommandValidator();
+                validator.ValidateAndThrow(command);
+
+                // ValidationResult result = validator.Validate(Model);
+
+                // if (!result.IsValid)
+                //     foreach (var failure in result.Errors)
+                //         Console.WriteLine("Property " + failure.PropertyName + " failed validation. Error was: " + failure.ErrorMessage);
+
                 command.Handle();
             }
             catch (Exception ex)
@@ -102,7 +122,11 @@ namespace BookStoreWebApi.Controllers
         {
             try
             {
+
                 DeleteBookCommand command = new DeleteBookCommand(_context);
+                DeleteBookCommandValidator validator = new DeleteBookCommandValidator();
+                validator.ValidateAndThrow(command);
+
                 command.BookId = id;
                 command.Handle();
             }

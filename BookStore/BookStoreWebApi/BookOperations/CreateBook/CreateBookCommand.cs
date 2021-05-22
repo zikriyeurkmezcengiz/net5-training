@@ -3,6 +3,7 @@ using System.Linq;
 using AutoMapper;
 using BookStoreWebApi.DBOperations;
 using BookStoreWebApi.Entities;
+using FluentValidation.Results;
 
 namespace BookStoreWebApi.BookOperations.CreateBook
 {
@@ -25,12 +26,6 @@ namespace BookStoreWebApi.BookOperations.CreateBook
                 throw new InvalidOperationException("Kitap zaten mevcut.");
 
             book = _mapper.Map<Book>(Model);
-            // book = new Book();
-            // book.Title = Model.Title;
-            // book.PublishDate = Model.PublishDate;
-            // book.PageCount = Model.PageCount;
-            // book.GenreId = Model.GenreId;
-
             _context.Books.Add(book);
             _context.SaveChanges();
         }
