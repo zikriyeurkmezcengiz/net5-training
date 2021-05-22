@@ -6,15 +6,15 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
-public class ExceptionMiddleware
+public class CustomExceptionMiddleware
 {
     RequestDelegate next;
-    public ExceptionMiddleware(RequestDelegate _next)
+    public CustomExceptionMiddleware(RequestDelegate _next)
     {
         next = _next;
     }
 
-    public async Task InvokeAsync(HttpContext context)
+    public async Task Invoke(HttpContext context)
     {
         var watch = Stopwatch.StartNew();
         try
@@ -44,16 +44,16 @@ public class ExceptionMiddleware
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = (int)code;
 
-        var result = JsonConvert.SerializeObject(new { error = exception.Message }, Formatting.Indented);
+        var result = JsonConvert.SerializeObject(new { error = exception.Message }, Formatting.None);
 
         return context.Response.WriteAsync(result);
     }
 }
 
-public static class ExceptionMiddlewareExtension
+public static class CustomExceptionMiddlewareExtension
 {
-    public static IApplicationBuilder UseExceptionMiddleWare(this IApplicationBuilder builder)
+    public static IApplicationBuilder UseCustomExceptionMiddleware(this IApplicationBuilder builder)
     {
-        return builder.UseMiddleware<ExceptionMiddleware>();
+        return builder.UseMiddleware<CustomExceptionMiddleware>();
     }
 }
