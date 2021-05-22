@@ -86,6 +86,14 @@ namespace MiddlewareKavramı
                 await next.Invoke();
             });
 
+            //app.Run()
+            //     app.Run(async context =>
+            //    {
+            //        Console.WriteLine("Run middleware tetiklendi.");
+            //        await context.Response.WriteAsync("Run middleware tetiklendi.");
+
+            //    });
+
             //app.Map kullanımı 
             app.Map("/example", internalApp =>
                 internalApp.Run(async context =>
