@@ -25,3 +25,4 @@ static public class HelloMiddlewareExtension
         return builder.UseMiddleware<HelloMiddleware>();
     }
 }
+

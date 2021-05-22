@@ -51,11 +51,6 @@ namespace MiddlewareKavramı
 
             app.UseAuthorization();
 
-            // app.UseEndpoints(endpoints =>
-            // {
-            //     endpoints.MapControllers();
-            // });
-
             //app.Use Kullanımı
             app.Use(async (context, next) =>
             {
@@ -109,7 +104,10 @@ namespace MiddlewareKavramı
                   });
               });
 
-
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

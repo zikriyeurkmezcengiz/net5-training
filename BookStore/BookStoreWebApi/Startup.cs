@@ -58,6 +58,8 @@ namespace BookStoreWebApi
 
             app.UseAuthorization();
 
+            app.UseExceptionMiddleWare();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
