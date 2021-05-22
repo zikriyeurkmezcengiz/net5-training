@@ -28,7 +28,7 @@ namespace BookStoreWebApi.Controllers
         [HttpGet]
         public IActionResult GetBooks()
         {
-            GetBooksQuery command = new GetBooksQuery(_context);
+            GetBooksQuery command = new GetBooksQuery(_context, _mapper);
             var obj = command.Handle();
             return Ok(obj);
         }
