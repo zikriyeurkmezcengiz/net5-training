@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Net;
 using System.Threading.Tasks;
+using BookStoreWebApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
@@ -9,9 +10,11 @@ using Newtonsoft.Json;
 public class CustomExceptionMiddleware
 {
     RequestDelegate next;
-    public CustomExceptionMiddleware(RequestDelegate _next)
+    ILoggerService _loggerService;
+    public CustomExceptionMiddleware(RequestDelegate _next, ILoggerService loggerService)
     {
         next = _next;
+        _loggerService = loggerService;
     }
 
     public async Task Invoke(HttpContext context)
@@ -20,13 +23,13 @@ public class CustomExceptionMiddleware
         try
         {
             string message = "[Request]  HTTP " + context.Request.Method + " - " + context.Request.Path;
-            Console.WriteLine(message);
+            _loggerService.Write(message);
 
             await next(context);
 
             watch.Stop();
             message = "[Response] HTTP " + context.Request.Method + " - " + context.Request.Path + "responded " + context.Response.StatusCode + " in " + watch.Elapsed.TotalMilliseconds + " ms";
-            Console.WriteLine(message);
+            _loggerService.Write(message);
         }
         catch (Exception ex)
         {
@@ -39,7 +42,7 @@ public class CustomExceptionMiddleware
     {
         var code = HttpStatusCode.InternalServerError;
         string message = "[Error]    HTTP " + context.Request.Method + " - " + context.Response.StatusCode + " Error Message: " + exception.Message + " in " + watch.Elapsed.TotalMilliseconds + " ms";
-        Console.WriteLine(message);
+        _loggerService.Write(message);
 
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = (int)code;
