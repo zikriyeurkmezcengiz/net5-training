@@ -1,7 +1,6 @@
-using BookStoreWebApi.BookOperations.DeleteBook;
 using FluentValidation;
 
-namespace BookStoreWebApi.BookOperations.GetBookDetail
+namespace BookStoreWebApi.Application.BookOperations.GetBookDetail
 {
     public class GetBookDetailQueryValidator : AbstractValidator<GetBookDetailQuery>
     {

@@ -4,8 +4,9 @@ using System.Linq;
 using AutoMapper;
 using BookStoreWebApi.Common;
 using BookStoreWebApi.DBOperations;
+using Microsoft.EntityFrameworkCore;
 
-namespace BookStoreWebApi.BookOperations.GetBooks
+namespace BookStoreWebApi.Application.BookOperations.GetBooks
 {
     public class GetBooksQuery
     {
@@ -19,7 +20,9 @@ namespace BookStoreWebApi.BookOperations.GetBooks
 
         public List<BooksViewModel> Handle()
         {
-            var bookList = _context.Books.OrderBy(x => x.Id);
+            var bookList = _context.Books
+                        .Include(x => x.Genre)
+                        .OrderBy(x => x.Id);
 
             List<BooksViewModel> obj = _mapper.Map<List<BooksViewModel>>(bookList);
             // List<BooksViewModel> vm = new List<BooksViewModel>();

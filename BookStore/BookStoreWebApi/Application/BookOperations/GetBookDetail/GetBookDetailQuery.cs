@@ -4,8 +4,9 @@ using System.Linq;
 using AutoMapper;
 using BookStoreWebApi.Common;
 using BookStoreWebApi.DBOperations;
+using Microsoft.EntityFrameworkCore;
 
-namespace BookStoreWebApi.BookOperations.GetBookDetail
+namespace BookStoreWebApi.Application.BookOperations.GetBookDetail
 {
     public class GetBookDetailQuery
     {
@@ -20,20 +21,12 @@ namespace BookStoreWebApi.BookOperations.GetBookDetail
 
         public BookDetailViewModel Handle()
         {
-            var book = _context.Books.Find(BookId);
+            var book = _context.Books.Include(x => x.Genre).SingleOrDefault(x => x.Id == BookId);
 
             if (book is null)
                 throw new InvalidOperationException("Kitap bulunamadı.");
 
-
             BookDetailViewModel vm = _mapper.Map<BookDetailViewModel>(book);
-
-            //BookDetailViewModel vm = new BookDetailViewModel();
-            // vm.Title = book.Title;
-            // vm.Genre = ((GenreEnum)book.GenreId).ToString();
-            // vm.PageCount = book.PageCount;
-            // vm.PublishDate = book.PublishDate.Date.ToString("dd/MM/yyyy");
-
             return vm;
         }
     }

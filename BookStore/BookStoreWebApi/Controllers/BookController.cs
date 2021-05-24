@@ -1,11 +1,11 @@
 using System;
 using System.Linq;
 using AutoMapper;
-using BookStoreWebApi.BookOperations.CreateBook;
-using BookStoreWebApi.BookOperations.DeleteBook;
-using BookStoreWebApi.BookOperations.GetBookDetail;
-using BookStoreWebApi.BookOperations.GetBooks;
-using BookStoreWebApi.BookOperations.UpdateBook;
+using BookStoreWebApi.Application.BookOperations.CreateBook;
+using BookStoreWebApi.Application.BookOperations.DeleteBook;
+using BookStoreWebApi.Application.BookOperations.GetBookDetail;
+using BookStoreWebApi.Application.BookOperations.GetBooks;
+using BookStoreWebApi.Application.BookOperations.UpdateBook;
 using BookStoreWebApi.DBOperations;
 using BookStoreWebApi.Entities;
 using FluentValidation;

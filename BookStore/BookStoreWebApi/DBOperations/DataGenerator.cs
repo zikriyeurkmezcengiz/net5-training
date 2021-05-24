@@ -20,25 +20,40 @@ namespace BookStoreWebApi.DBOperations
                     return;   // Data was already seeded
                 }
 
+                context.Genres.AddRange(
+                    new Genre()
+                    {
+                        Name = "Personal Growth"
+                    },
+                    new Genre()
+                    {
+                        Name = "Science Fiction"
+                    },
+                    new Genre()
+                    {
+                        Name = "Romance"
+                    }
+                );
+
                 context.Books.AddRange(
                    new Book()
                    {
                        Title = "Lean Startup",
-                       GenreId = (int)GenreEnum.PersonalGrowth, // Personal Growth
+                       GenreId = 1,
                        PageCount = 200,
                        PublishDate = new DateTime(2001, 06, 12)
                    },
                     new Book()
                     {
                         Title = "Herland",
-                        GenreId = (int)GenreEnum.ScienceFiction, // Science Fiction
+                        GenreId = 2,
                         PageCount = 250,
                         PublishDate = new DateTime(2002, 06, 12)
                     },
                     new Book()
                     {
                         Title = "Dune",
-                        GenreId = (int)GenreEnum.ScienceFiction, // Science Fiction
+                        GenreId = 2,
                         PageCount = 540,
                         PublishDate = new DateTime(2002, 05, 23)
                     });

@@ -3,7 +3,7 @@ using System.Linq;
 using BookStoreWebApi.DBOperations;
 using BookStoreWebApi.Entities;
 
-namespace BookStoreWebApi.BookOperations.UpdateBook
+namespace BookStoreWebApi.Application.BookOperations.UpdateBook
 {
     public class UpdateBookCommand
     {

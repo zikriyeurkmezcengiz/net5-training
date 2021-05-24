@@ -3,9 +3,8 @@ using System.Linq;
 using AutoMapper;
 using BookStoreWebApi.DBOperations;
 using BookStoreWebApi.Entities;
-using FluentValidation.Results;
 
-namespace BookStoreWebApi.BookOperations.CreateBook
+namespace BookStoreWebApi.Application.BookOperations.CreateBook
 {
     public class CreateBookCommand
     {
