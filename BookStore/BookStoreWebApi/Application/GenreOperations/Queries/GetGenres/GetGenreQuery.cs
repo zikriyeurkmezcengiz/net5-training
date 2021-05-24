@@ -18,9 +18,9 @@ namespace BookStoreWebApi.Application.GenreOperations.GetGenres
 
         public List<GenresViewModel> Handle()
         {
-            var bookList = _context.Genres.OrderBy(x => x.Id);
+            var genres = _context.Genres.OrderBy(x => x.Id);
 
-            List<GenresViewModel> obj = _mapper.Map<List<GenresViewModel>>(bookList);
+            List<GenresViewModel> obj = _mapper.Map<List<GenresViewModel>>(genres);
             return obj;
         }
     }
@@ -28,7 +28,7 @@ namespace BookStoreWebApi.Application.GenreOperations.GetGenres
     public class GenresViewModel
     {
         public int Id { get; set; }
-        public int Name { get; set; }
+        public string Name { get; set; }
     }
 
 }

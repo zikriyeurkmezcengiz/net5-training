@@ -79,8 +79,6 @@ namespace BookStoreWebApi.Controllers
         [HttpPost]
         public IActionResult AddBook([FromBody] CreateBookModel newBook)
         {
-            // try
-            // {
 
             CreateBookCommand command = new CreateBookCommand(_context, _mapper);
             command.Model = newBook;
@@ -88,19 +86,6 @@ namespace BookStoreWebApi.Controllers
             CreateBookCommandValidator validator = new CreateBookCommandValidator();
             validator.ValidateAndThrow(command);
 
-            // ValidationResult result = validator.Validate(Model);
-
-            // if (!result.IsValid)
-            //     foreach (var failure in result.Errors)
-            //         Console.WriteLine("Property " + failure.PropertyName + " failed validation. Error was: " + failure.ErrorMessage);
-
-            //     command.Handle();
-            // }
-            // catch (Exception ex)
-            // {
-            //     throw ex;
-            //     //return BadRequest(ex.Message);
-            // }
             return Ok();
         }
 
