@@ -53,6 +53,7 @@ namespace BookStoreWebApi.Controllers
             CreateGenreCommandValidator validator = new CreateGenreCommandValidator();
             validator.ValidateAndThrow(command);
 
+            command.Handle();
             return Ok();
         }
 

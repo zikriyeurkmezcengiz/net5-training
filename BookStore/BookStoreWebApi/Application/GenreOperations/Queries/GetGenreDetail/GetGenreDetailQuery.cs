@@ -20,7 +20,7 @@ namespace BookStoreWebApi.Application.GenreOperations.GetGenreDetail
 
         public GenreDetailViewModel Handle()
         {
-            var genre = _context.Genres.Find(GenreId);
+            var genre = _context.Genres.SingleOrDefault(x => x.IsActive && x.Id == GenreId);
 
             if (genre is null)
                 throw new InvalidOperationException("Kitap Türü Bulunamadı.");
