@@ -24,7 +24,7 @@ namespace BookStoreWebApi.Application.GenreOperations.UpdateGenre
             if (_context.Genres.Any(x => x.Name == Model.Name && x.Id != GenreId))
                 throw new InvalidOperationException("Aynı isimli bir kitap türü zaten mevcut.");
 
-            genre.Name = Model.Name;
+            genre.Name = Model.Name.Trim() == default ? Model.Name : genre.Name;
             genre.IsActive = Model.IsActive;
             _context.SaveChanges();
         }
