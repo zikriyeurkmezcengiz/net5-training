@@ -7,12 +7,13 @@ using BookStoreWebApi.Application.BookOperations.GetBookDetail;
 using BookStoreWebApi.Application.BookOperations.GetBooks;
 using BookStoreWebApi.Application.BookOperations.UpdateBook;
 using BookStoreWebApi.DBOperations;
-using BookStoreWebApi.Entities;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookStoreWebApi.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]s")]
     public class BookController : ControllerBase

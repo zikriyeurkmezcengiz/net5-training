@@ -4,6 +4,7 @@ using BookStoreWebApi.Application.BookOperations.GetBookDetail;
 using BookStoreWebApi.Application.BookOperations.GetBooks;
 using BookStoreWebApi.Application.GenreOperations.GetGenreDetail;
 using BookStoreWebApi.Application.GenreOperations.GetGenres;
+using BookStoreWebApi.Application.UserOperations.Commands.Create;
 using BookStoreWebApi.Entities;
 
 namespace BookStoreWebApi.Common
@@ -17,6 +18,7 @@ namespace BookStoreWebApi.Common
             CreateMap<Book, BooksViewModel>().ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.Genre.Name));
             CreateMap<Genre, GenresViewModel>();
             CreateMap<Genre, GenreDetailViewModel>();
+            CreateMap<CreateUserModel, User>();
         }
     }
 
