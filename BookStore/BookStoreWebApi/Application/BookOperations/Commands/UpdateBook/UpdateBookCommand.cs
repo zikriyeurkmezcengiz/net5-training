@@ -9,8 +9,8 @@ namespace BookStoreWebApi.Application.BookOperations.UpdateBook
     {
         public int BookId { get; set; }
         public UpdateBookModel Model { get; set; }
-        private readonly BookStoreDbContext _context;
-        public UpdateBookCommand(BookStoreDbContext context)
+        private readonly IBookStoreDbContext _context;
+        public UpdateBookCommand(IBookStoreDbContext context)
         {
             _context = context;
         }
