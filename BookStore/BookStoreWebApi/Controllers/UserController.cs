@@ -2,6 +2,7 @@
 using AutoMapper;
 using BookStoreWebApi.Application.UserOperations.Commands.Create;
 using BookStoreWebApi.Application.UserOperations.Commands.CreateToken;
+using BookStoreWebApi.Application.UserOperations.Commands.RefreshToken;
 using BookStoreWebApi.DBOperations;
 using BookStoreWebApi.TokenOperations.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -40,6 +41,15 @@ namespace BookStoreWebApi.Controllers
             command.Model = login;
             var token = command.Handle();
             return token;
+        }
+
+        [HttpGet("refreshToken")]
+        public ActionResult<Token> RefreshToken([FromQuery] string token)
+        {
+            RefreshTokenCommand command = new RefreshTokenCommand(_context, _configuration);
+            command.RefreshToken = token;
+            var resultToken = command.Handle();
+            return resultToken;
         }
     }
 }

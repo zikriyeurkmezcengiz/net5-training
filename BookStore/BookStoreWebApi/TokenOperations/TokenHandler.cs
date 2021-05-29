@@ -21,7 +21,7 @@ namespace BookStoreWebApi.TokenOperations
         //Token üretecek metot.
         public Token CreateAccessToken(User user)
         {
-            Token tokenInstance = new Models.Token();
+            Token tokenInstance = new Token();
 
             //Security  Key'in simetriğini alıyoruz.
             SymmetricSecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Token:SecurityKey"]));
@@ -30,7 +30,7 @@ namespace BookStoreWebApi.TokenOperations
             SigningCredentials signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             //Oluşturulacak token ayarlarını veriyoruz.
-            tokenInstance.Expiration = DateTime.Now.AddMinutes(30);
+            tokenInstance.Expiration = DateTime.Now.AddMinutes(15);
             JwtSecurityToken securityToken = new JwtSecurityToken(
                 issuer: Configuration["Token:Issuer"],
                 audience: Configuration["Token:Audience"],
@@ -53,12 +53,7 @@ namespace BookStoreWebApi.TokenOperations
         //Refresh Token üretecek metot.
         public string CreateRefreshToken()
         {
-            byte[] number = new byte[32];
-            using (RandomNumberGenerator random = RandomNumberGenerator.Create())
-            {
-                random.GetBytes(number);
-                return Convert.ToBase64String(number);
-            }
+            return Guid.NewGuid().ToString();
         }
     }
 }
