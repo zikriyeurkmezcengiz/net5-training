@@ -3,6 +3,7 @@ using System.Linq;
 using AutoMapper;
 using BookStoreWebApi.Application.BookOperations.CreateBook;
 using BookStoreWebApi.DBOperations;
+using BookStoreWebApi.Entities;
 using FluentAssertions;
 using TestSetup;
 using Xunit;
@@ -23,8 +24,12 @@ namespace Application.BookOperations.Commands.CreateBook
         public void WhenAlreadyExistBookTitleIsGiven_InvalidOperationException_ShouldBeReturn()
         {
             //arrange
+            var book = new Book() { Title = "Test Verisi", PageCount = 1000, PublishDate = new DateTime(1990, 01, 20), GenreId = 1 };
+            _context.Books.Add(book);
+            _context.SaveChanges();
+
             CreateBookCommand command = new CreateBookCommand(_context, _mapper);
-            command.Model = new CreateBookModel() { Title = "Herland" };
+            command.Model = new CreateBookModel() { Title = book.Title };
 
             //act & assert
             FluentActions
